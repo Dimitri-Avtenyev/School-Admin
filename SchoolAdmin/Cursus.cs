@@ -1,6 +1,5 @@
 using System;
 
-
 namespace SchoolAdmin
 {
     class Cursus

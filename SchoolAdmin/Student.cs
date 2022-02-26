@@ -25,15 +25,14 @@ namespace SchoolAdmin
         }
         public void RegistreerCursusResultaat(string cursus, byte cijfer) {
             int vrijePositie = -1;
-            CursusResultaat nieuwCursusResultaat = new CursusResultaat();
+            //CursusResultaat nieuwCursusResultaat = new CursusResultaat();
             for(int i=0; i<cursusResultaten.Length && vrijePositie == -1; i++) {
                 if(this.cursusResultaten[i] is null) {
                     vrijePositie = i;
                 }
             }
             if(vrijePositie > -1) {
-                nieuwCursusResultaat.Naam = cursus;
-                nieuwCursusResultaat.Resultaat = cijfer;
+                CursusResultaat nieuwCursusResultaat = new CursusResultaat(cursus, cijfer);
                 this.cursusResultaten[vrijePositie] = nieuwCursusResultaat;
     
             }
