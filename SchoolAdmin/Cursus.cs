@@ -5,11 +5,31 @@ namespace SchoolAdmin
     class Cursus
     {
         public string Titel;
+        private int id;
+        private static int maxId = 1;
+        public Cursus() {
+            id = maxId;
+            MaxId++;
+        }
+        public int Id {
+            get {
+                return id;
+            }
+        }
+        public int MaxId {
+            get {
+                return maxId;
+            }
+            set {
+                maxId = value;
+            }
+        }
+
         public Student[] Studenten = new Student[2];
 
         public void ToonOverzicht() {
 
-            Console.WriteLine($"---{this.Titel}---");
+            Console.WriteLine($"--- ({this.Id}){this.Titel} ---");
 
             for(int i=0;i<this.Studenten.Length; i++){
                 if(this.Studenten[i] is not null) {
