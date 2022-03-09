@@ -55,6 +55,7 @@ namespace SchoolAdmin
             Console.WriteLine("\n");
         }
         public static void DemonstreerCursussen() {
+            Cursus.maxId = 1;        //Each method call will stay consistent with maxId.
             Student student1 = new Student();
             Student student2 = new Student();
             Student student3 = new Student();

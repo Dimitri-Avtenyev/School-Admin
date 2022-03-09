@@ -69,6 +69,27 @@ namespace SchoolAdmin
             }
             Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F2}\n");
         }
+        public static Student StudentUitTekstFormaat(string cvsWaarde) {
+
+            string[] cvsWaardes = cvsWaarde.Split(";");
+            Student student = new Student();
+            int day = Convert.ToInt32(cvsWaardes[1]);
+            int month = Convert.ToInt32(cvsWaardes[2]);
+            int year = Convert.ToInt32(cvsWaardes[3]);
+            student.Naam = cvsWaardes[0];
+            student.Geboortedatum = new DateTime(year, month, day);
+            student.Studentennummer = StudentenTeller;
+            Student.StudentenTeller++;
+
+            if(cvsWaardes.Length > 4) {
+                for(int i=4; i<cvsWaardes.Length; i+=2) {
+                    string cursus = cvsWaardes[i]; 
+                    byte cijfer = Convert.ToByte(cvsWaardes[i+1]);
+                    student.RegistreerCursusResultaat(cursus, cijfer);
+                }
+            }           
+            return student;
+        }
         public static void DemonstreerStudent() {
 
             Student student1 = new Student();
@@ -96,6 +117,11 @@ namespace SchoolAdmin
             student2.RegistreerCursusResultaat("Databanken", 9);
             //student2.Kwoteer(2, 9);
             student2.ToonOverzicht();
+        }
+        public static void DemonstreerStudentUitTekstFormaat() {
+            Console.WriteLine("Geef de tekstvoorstelling van 1 student in CSV-formaat: ");
+            string userInput = Console.ReadLine();
+            StudentUitTekstFormaat(userInput).ToonOverzicht();
         }
 
     }

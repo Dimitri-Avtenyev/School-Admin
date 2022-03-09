@@ -12,6 +12,7 @@ namespace SchoolAdmin
                 Console.WriteLine("Wat wil je doen? (Stoppen met 'stop')");
                 Console.WriteLine("1. DemonstreerStudenten uitvoeren");
                 Console.WriteLine("2. DemonstreerCursussen uitvoeren");
+                Console.WriteLine("3. DemonstreerStudentUitTekstFormaat uitvoeren");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
                     default: 
@@ -25,6 +26,9 @@ namespace SchoolAdmin
                     break;
                     case("2"):
                     Cursus.DemonstreerCursussen();
+                    break;
+                    case("3"): 
+                    Student.DemonstreerStudentUitTekstFormaat();
                     break;
                 }
             } while(!stop);

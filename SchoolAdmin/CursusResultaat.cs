@@ -5,7 +5,7 @@ namespace SchoolAdmin
     class CursusResultaat
     {
         private string naam;
-        public byte resultaat;
+        private byte resultaat;
         public CursusResultaat(string naam, byte resultaat) {
             this.naam = naam;
             this.Resultaat = resultaat;
