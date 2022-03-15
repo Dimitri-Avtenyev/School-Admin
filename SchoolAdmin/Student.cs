@@ -8,40 +8,47 @@ namespace SchoolAdmin
         public string Naam;
         public DateTime Geboortedatum;
         public uint Studentennummer;
-        private CursusResultaat[] cursusResultaten = new CursusResultaat[5];
+        private VakInschrijving[] vakInschrijvingen = new VakInschrijving[5];
         public static uint StudentenTeller = 1;
         
+        public Student(string naam, DateTime geboorteDatum) {
+            this.Naam = naam;
+            this.Geboortedatum = geboorteDatum;
+            StudentenTeller++;
+        }
+        public Student() {
+            StudentenTeller++;
+        }
         public string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
         }
         public byte BepaalWerkbelasting() {
             byte totaal = 0;
-            for (int i=0; i< cursusResultaten.Length; i++) {
-                if(this.cursusResultaten[i] is not null) {
+            for (int i=0; i< vakInschrijvingen.Length; i++) {
+                if(this.vakInschrijvingen[i] is not null) {
                     totaal +=10;
                 }
             }
             return totaal;
         }
-        public void RegistreerCursusResultaat(string cursus, byte cijfer) {
+        public void RegistreerCursusResultaat(string cursus, byte? cijfer) {
+
             int vrijePositie = -1;
-            //CursusResultaat nieuwCursusResultaat = new CursusResultaat();
-            for(int i=0; i<cursusResultaten.Length && vrijePositie == -1; i++) {
-                if(this.cursusResultaten[i] is null) {
+            for(int i=0; i<vakInschrijvingen.Length && vrijePositie == -1; i++) {
+                if(this.vakInschrijvingen[i] is null) {
                     vrijePositie = i;
                 }
             }
             if(vrijePositie > -1) {
-                CursusResultaat nieuwCursusResultaat = new CursusResultaat(cursus, cijfer);
-                this.cursusResultaten[vrijePositie] = nieuwCursusResultaat;
-    
+                VakInschrijving nieuwCursusResultaat = new VakInschrijving(cursus, cijfer);
+                this.vakInschrijvingen[vrijePositie] = nieuwCursusResultaat;
             }
         }
         public void Kwoteer(byte cursusindex,byte behaaldCijfer) {
-            if(behaaldCijfer<0 || behaaldCijfer >20) {
+            if(behaaldCijfer<0 || behaaldCijfer >20 || cursusindex>vakInschrijvingen.Length || vakInschrijvingen[cursusindex] is null) {
                 Console.WriteLine("Ongeldig cijfer!");
             } else {
-                this.cursusResultaten[cursusindex].Resultaat = behaaldCijfer;
+                this.vakInschrijvingen[cursusindex].Resultaat = behaaldCijfer;
             }
             
         }
@@ -49,10 +56,10 @@ namespace SchoolAdmin
             double gemiddelde = 0.0;
             double som = 0;
             byte counter = 0;
-            for(int i=0; i<this.cursusResultaten.Length; i++) {
-                if(this.cursusResultaten[i] is not null) {
-                som +=cursusResultaten[i].Resultaat;
-                counter++;
+            for(int i=0; i<this.vakInschrijvingen.Length; i++) {
+                if(vakInschrijvingen[i] != null && vakInschrijvingen[i].Resultaat is not null) {
+                    som += (byte)vakInschrijvingen[i].Resultaat;
+                    counter++;
                 }
             }
             gemiddelde = som/counter;
@@ -62,12 +69,12 @@ namespace SchoolAdmin
             DateTime currentDateTime = DateTime.Now;
             Console.WriteLine($"{this.GenereerNaamKaartje()}, {currentDateTime.Year - this.Geboortedatum.Year-1} jaar");
             Console.WriteLine("\nCijferrapport:\n"+$"{"*******".PadRight("Cijferrapport:".Length,'*')}\n");
-            for(int i=0; i<this.cursusResultaten.Length; i++) {
-                if(cursusResultaten[i] is not null) {
-                    Console.WriteLine($"{this.cursusResultaten[i].Naam}:".PadRight(20)+$"{this.cursusResultaten[i].Resultaat}"); //alignment needed
+            for(int i=0; i<this.vakInschrijvingen.Length; i++) {
+                if(vakInschrijvingen[i] is not null) {
+                    Console.WriteLine($"{this.vakInschrijvingen[i].Naam}:".PadRight(20)+$"{this.vakInschrijvingen[i].Resultaat}"); 
                 }
             }
-            Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F2}\n");
+            Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F1}\n");
         }
         public static Student StudentUitTekstFormaat(string cvsWaarde) {
 
@@ -92,12 +99,12 @@ namespace SchoolAdmin
         }
         public static void DemonstreerStudent() {
 
-            Student student1 = new Student();
+            Student.StudentenTeller = 1;
+            Student student1 = new Student(); //of constructor met naam,...
             Student student2 = new Student();
-            student1.Naam = "Dimitri Avtenyev";
+            student1.Naam = "Dimitri Avtenyev"; //demo met properties'set' ipv via constructor
             student1.Geboortedatum = new DateTime(1990, 12, 2);
             student1.Studentennummer = Student.StudentenTeller;
-            Student.StudentenTeller++;
             student1.RegistreerCursusResultaat("Programmeren", 17);
             //student1.Kwoteer(0,17);
             student1.RegistreerCursusResultaat("Webontwikkeling", 18);
@@ -109,7 +116,6 @@ namespace SchoolAdmin
             student2.Naam = "Kylo Ren";
             student2.Geboortedatum = new DateTime(1989, 1, 1);
             student2.Studentennummer = Student.StudentenTeller;
-            Student.StudentenTeller++;
             student2.RegistreerCursusResultaat("The Force", 19);
             //student2.Kwoteer(0, 19);
             student2.RegistreerCursusResultaat("Programmeren", 13);

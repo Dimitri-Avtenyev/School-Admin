@@ -16,20 +16,20 @@ namespace SchoolAdmin
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
                     default: 
-                    Console.WriteLine("Ongeldige keuze!");
-                    break;
+                        Console.WriteLine("Ongeldige keuze!");
+                        break;
                     case("stop"): 
-                    stop = true;
-                    break;
+                        stop = true;
+                        break;
                     case("1"): 
-                    Student.DemonstreerStudent();
-                    break;
+                        Student.DemonstreerStudent();
+                        break;
                     case("2"):
-                    Cursus.DemonstreerCursussen();
-                    break;
+                        Cursus.DemonstreerCursussen();
+                        break;
                     case("3"): 
-                    Student.DemonstreerStudentUitTekstFormaat();
-                    break;
+                        Student.DemonstreerStudentUitTekstFormaat();
+                        break;
                 }
             } while(!stop);
         }
