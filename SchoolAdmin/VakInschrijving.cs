@@ -4,15 +4,16 @@ namespace SchoolAdmin
 {
     class VakInschrijving
     {
-        private string naam;
+        //private string naam;
+        private Cursus cursus;
         private byte? resultaat;
-        public VakInschrijving(string naam, byte? resultaat) {
-            this.naam = naam;
+        public VakInschrijving(Cursus cursus, byte? resultaat) {
+            this.cursus =  cursus;
             this.Resultaat = resultaat;
         }
         public string Naam {
             get {
-                return this.naam;
+                return this.cursus.Titel;
             }
         }
         public byte? Resultaat {

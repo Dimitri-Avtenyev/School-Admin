@@ -31,7 +31,7 @@ namespace SchoolAdmin
             }
             return totaal;
         }
-        public void RegistreerCursusResultaat(string cursus, byte? cijfer) {
+        public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer) {
 
             int vrijePositie = -1;
             for(int i=0; i<vakInschrijvingen.Length && vrijePositie == -1; i++) {
@@ -90,7 +90,8 @@ namespace SchoolAdmin
 
             if(cvsWaardes.Length > 4) {
                 for(int i=4; i<cvsWaardes.Length; i+=2) {
-                    string cursus = cvsWaardes[i]; 
+                    string cursusNaam = cvsWaardes[i]; 
+                    Cursus cursus = new Cursus(cursusNaam);
                     byte cijfer = Convert.ToByte(cvsWaardes[i+1]);
                     student.RegistreerCursusResultaat(cursus, cijfer);
                 }
@@ -105,22 +106,26 @@ namespace SchoolAdmin
             student1.Naam = "Dimitri Avtenyev"; //demo met properties'set' ipv via constructor
             student1.Geboortedatum = new DateTime(1990, 12, 2);
             student1.Studentennummer = Student.StudentenTeller;
-            student1.RegistreerCursusResultaat("Programmeren", 17);
+            Cursus programmeren = new Cursus("Programmeren");
+            Cursus webontwikkeling = new Cursus("Programmeren");
+            Cursus databanken = new Cursus("Databanken");
+            Cursus theForce = new Cursus("The Force");
+            student1.RegistreerCursusResultaat(programmeren, 17);
             //student1.Kwoteer(0,17);
-            student1.RegistreerCursusResultaat("Webontwikkeling", 18);
+            student1.RegistreerCursusResultaat(webontwikkeling, 18);
             //student1.Kwoteer(1, 18);
-            student1.RegistreerCursusResultaat("Databanken", 16);
+            student1.RegistreerCursusResultaat(databanken, 16);
             //student1.Kwoteer(2, 16);
             student1.ToonOverzicht();
     
             student2.Naam = "Kylo Ren";
             student2.Geboortedatum = new DateTime(1989, 1, 1);
             student2.Studentennummer = Student.StudentenTeller;
-            student2.RegistreerCursusResultaat("The Force", 19);
+            student2.RegistreerCursusResultaat(theForce, 19);
             //student2.Kwoteer(0, 19);
-            student2.RegistreerCursusResultaat("Programmeren", 13);
+            student2.RegistreerCursusResultaat(programmeren, 13);
             //student2.Kwoteer(1, 13);
-            student2.RegistreerCursusResultaat("Databanken", 9);
+            student2.RegistreerCursusResultaat(databanken, 9);
             //student2.Kwoteer(2, 9);
             student2.ToonOverzicht();
         }
