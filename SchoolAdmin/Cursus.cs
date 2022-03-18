@@ -69,22 +69,14 @@ namespace SchoolAdmin
             }
            
         }
-        public Cursus ZoekCursusOpId(int id) {
-        
-            Cursus? geselecteerdeCursus = null;
+        public static Cursus ZoekCursusOpId(int id) {
 
-            for (int i = 0; i < AlleCursussen.Length; i++)
-            {
-                if (!(AlleCursussen[i] is null))
-                {
-                    if (i == id)
-                    {
-                        geselecteerdeCursus = AlleCursussen[i];
-                    }
+            for (int i = 0; i < AlleCursussen.Length; i++) {
+                if (AlleCursussen[i].Id == id) {
+                    return AlleCursussen[i]; 
                 }
             }
-
-            return geselecteerdeCursus;
+            return null;
         }
         public static void DemonstreerCursussen() {
             Cursus.maxId = 1;        //Each method call will stay consistent with maxId.
@@ -122,8 +114,12 @@ namespace SchoolAdmin
             communicatie.ToonOverzicht();
             programmeren.ToonOverzicht();
             webtechnologie.ToonOverzicht();
-            databanken.ToonOverzicht();
-        
+            databanken.ToonOverzicht(); 
+            /* test methodes
+            registreerCursus(programmeren);
+            registreerCursus(webtechnologie);
+            Console.WriteLine(ZoekCursusOpId(5).Titel);
+            */
         }
     }
 }
