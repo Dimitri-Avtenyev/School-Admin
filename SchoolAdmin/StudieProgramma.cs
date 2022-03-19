@@ -28,19 +28,15 @@ namespace SchoolAdmin
         }
         public StudieProgramma(string naam) {
             this.naam = naam;
-            this.Cursussen = new Cursus[3];
         }
         public void ToonOverzicht() {
             Console.WriteLine(this.Naam);
-            if(this.cursussen is null) {
-                Console.WriteLine("Er zijn geen cursussen aanwezig.");
-            }
+
             foreach(Cursus cursus in cursussen) {
                 if(cursus is not null) {
                     Console.WriteLine($"\t{cursus.Titel}");
                 }
-            }
-            
+            }      
         }
         public static void DemonstreerStudieProgramma() {
         Cursus communicatie = new Cursus("Communicatie");
