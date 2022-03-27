@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace SchoolAdmin
 {
@@ -13,8 +15,8 @@ namespace SchoolAdmin
                 naam = value;
             }
         }
-        private Cursus[] cursussen;
-        public Cursus[] Cursussen{
+        private List<Cursus> cursussen = new List<Cursus>();
+        public List<Cursus> Cursussen{
             get {
                 return cursussen;
             }
@@ -42,14 +44,18 @@ namespace SchoolAdmin
         Cursus communicatie = new Cursus("Communicatie");
         Cursus programmeren = new Cursus("Programmeren");
         Cursus databanken = new Cursus("Databanken", new Student[7], 5);
-        Cursus[] cursussen1 = { communicatie, programmeren, databanken };
-        Cursus[] cursussen2 = { communicatie, programmeren, databanken };
+
+        Cursus[] cursussenCollectie1 = { communicatie, programmeren, databanken };
+        Cursus[] cursussenCollectie2 = { communicatie, programmeren, databanken };
+
+        List<Cursus> cursussen1 = new List<Cursus>(cursussenCollectie1);
+        List<Cursus> cursussen2 = new List<Cursus>(cursussenCollectie2);
         StudieProgramma programmerenProgramma = new StudieProgramma("Programmeren");
         StudieProgramma snbProgramma = new StudieProgramma("Systeem- en netwerkbeheer");
         programmerenProgramma.cursussen = cursussen1;
         snbProgramma.cursussen = cursussen2;
-        // later wordt Databanken geschrapt uit het programma SNB
-        // voor SNB wordt bovendien Programmeren hernoemd naar Scripting
+        // "Databanken" geschrapt uit het programma SNB -> "null"
+        // SNB "Programmeren" hernoemd naar "Scripting"
         snbProgramma.cursussen[2] = null;
         snbProgramma.cursussen[1].Titel = "Scripting";
         programmerenProgramma.ToonOverzicht();

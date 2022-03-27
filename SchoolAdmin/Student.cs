@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 
 namespace SchoolAdmin
@@ -8,23 +10,32 @@ namespace SchoolAdmin
         public string Naam;
         public DateTime Geboortedatum;
         public uint Studentennummer;
-        private VakInschrijving[] vakInschrijvingen = new VakInschrijving[5];
+        private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
         public static uint StudentenTeller = 1;
+        private static List<Student> alleStudenten = new List<Student>();
+        
+        public static ImmutableList<Student> AlleStudenten {
+            get {
+                return alleStudenten.ToImmutableList();
+            }
+        }
         
         public Student(string naam, DateTime geboorteDatum) {
             this.Naam = naam;
             this.Geboortedatum = geboorteDatum;
             StudentenTeller++;
+            alleStudenten.Add(this);
         }
         public Student() {
             StudentenTeller++;
+            alleStudenten.Add(this);
         }
         public string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
         }
         public byte BepaalWerkbelasting() {
             byte totaal = 0;
-            for (int i=0; i< vakInschrijvingen.Length; i++) {
+            for (int i=0; i< vakInschrijvingen.Count; i++) {
                 if(this.vakInschrijvingen[i] is not null) {
                     totaal +=10;
                 }
@@ -34,7 +45,7 @@ namespace SchoolAdmin
         public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer) {
 
             int vrijePositie = -1;
-            for(int i=0; i<vakInschrijvingen.Length && vrijePositie == -1; i++) {
+            for(int i=0; i<vakInschrijvingen.Count && vrijePositie == -1; i++) {
                 if(this.vakInschrijvingen[i] is null) {
                     vrijePositie = i;
                 }
@@ -45,7 +56,7 @@ namespace SchoolAdmin
             }
         }
         public void Kwoteer(byte cursusindex,byte behaaldCijfer) {
-            if(behaaldCijfer<0 || behaaldCijfer >20 || cursusindex>vakInschrijvingen.Length || vakInschrijvingen[cursusindex] is null) {
+            if(behaaldCijfer<0 || behaaldCijfer >20 || cursusindex>vakInschrijvingen.Count || vakInschrijvingen[cursusindex] is null) {
                 Console.WriteLine("Ongeldig cijfer!");
             } else {
                 this.vakInschrijvingen[cursusindex].Resultaat = behaaldCijfer;
@@ -56,7 +67,7 @@ namespace SchoolAdmin
             double gemiddelde = 0.0;
             double som = 0;
             byte counter = 0;
-            for(int i=0; i<this.vakInschrijvingen.Length; i++) {
+            for(int i=0; i<this.vakInschrijvingen.Count; i++) {
                 if(vakInschrijvingen[i] != null && vakInschrijvingen[i].Resultaat is not null) {
                     som += (byte)vakInschrijvingen[i].Resultaat;
                     counter++;
@@ -69,9 +80,9 @@ namespace SchoolAdmin
             DateTime currentDateTime = DateTime.Now;
             Console.WriteLine($"{this.GenereerNaamKaartje()}, {currentDateTime.Year - this.Geboortedatum.Year-1} jaar");
             Console.WriteLine("\nCijferrapport:\n"+$"{"*******".PadRight("Cijferrapport:".Length,'*')}\n");
-            for(int i=0; i<this.vakInschrijvingen.Length; i++) {
-                if(vakInschrijvingen[i] is not null) {
-                    Console.WriteLine($"{this.vakInschrijvingen[i].Naam}:".PadRight(20)+$"{this.vakInschrijvingen[i].Resultaat}"); 
+            foreach(var vakinschrijving in vakInschrijvingen) {
+                if(vakinschrijving is not null) {
+                    Console.WriteLine($"{vakinschrijving.Naam}:".PadRight(20)+$"{vakinschrijving.Resultaat}"); 
                 }
             }
             Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F1}\n");
@@ -102,7 +113,7 @@ namespace SchoolAdmin
 
             Student.StudentenTeller = 1;
             Student student1 = new Student(); //of constructor met naam,...
-            Student student2 = new Student();
+           
             student1.Naam = "Dimitri Avtenyev"; //demo met properties'set' ipv via constructor
             student1.Geboortedatum = new DateTime(1990, 12, 2);
             student1.Studentennummer = Student.StudentenTeller;
@@ -117,9 +128,8 @@ namespace SchoolAdmin
             student1.RegistreerCursusResultaat(databanken, 16);
             //student1.Kwoteer(2, 16);
             student1.ToonOverzicht();
-    
-            student2.Naam = "Kylo Ren";
-            student2.Geboortedatum = new DateTime(1989, 1, 1);
+
+            Student student2 = new Student("Kylo Ren",new DateTime(1989, 1, 1));
             student2.Studentennummer = Student.StudentenTeller;
             student2.RegistreerCursusResultaat(theForce, 19);
             //student2.Kwoteer(0, 19);

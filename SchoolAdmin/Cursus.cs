@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace SchoolAdmin
 {
@@ -9,7 +11,7 @@ namespace SchoolAdmin
         private int id;
         private static int maxId = 1;
         private byte studiepunten;
-        public static Cursus[] AlleCursussen = new Cursus[10];
+        private static List<Cursus> alleCursussen = new List<Cursus>(10);
         public Cursus(string titel, Student[] studenten, byte studiepunten) {
             this.Titel = titel;
             this.Studenten = studenten;
@@ -44,34 +46,42 @@ namespace SchoolAdmin
                 maxId = value;
             }
         }
+        public static ImmutableList<Cursus> AlleCursussen {
+            get {
+                return alleCursussen.ToImmutableList();
+            }
+        }
         public void ToonOverzicht() {
 
             Console.WriteLine($"--- ({this.Id}): {this.studiepunten}stp {this.Titel} ---");
 
-            for(int i=0;i<this.Studenten.Length; i++){
-                if(this.Studenten[i] is not null) {
-                    Console.WriteLine($"{this.Studenten[i].Naam}");
+            foreach(var student in Studenten){
+                if(student is not null) {
+                    Console.WriteLine($"{student.Naam}");
                 }
             }
             Console.WriteLine("\n");
         }
         private static void registreerCursus(Cursus cursus){
+            alleCursussen.Add(cursus);
+            /* --Voor verandering van List<Cursus> alleCursussen--
             int? vrijePositie = null;
-            for(int i=0; i<AlleCursussen.Length && vrijePositie is null; i++){
+            for(int i=0; i<AlleCursussen.Count && vrijePositie is null; i++){
                 if(AlleCursussen[i] is null) {
                     vrijePositie = i;
                 }
             }
             if(vrijePositie is not null) {
-                AlleCursussen[(int)vrijePositie] = cursus;
+                alleCursussen.Insert((int)vrijePositie, cursus);
             } else {
                 Console.WriteLine("Er zijn geen vrije posities meer");
             }
+            */
            
         }
         public static Cursus ZoekCursusOpId(int id) {
-
-            for (int i = 0; i < AlleCursussen.Length; i++) {
+            
+            for (int i = 0; i < AlleCursussen.Count; i++) {
                 if (AlleCursussen[i].Id == id) {
                     return AlleCursussen[i]; 
                 }
@@ -79,11 +89,12 @@ namespace SchoolAdmin
             return null;
         }
         public static void DemonstreerCursussen() {
+             Console.WriteLine(AlleCursussen.Count);
             Cursus.maxId = 1;        //Each method call will stay consistent with maxId.
             Student student1 = new Student("Dimitri Avtenyev",new DateTime(1990,12,2));
             Student student2 = new Student("Kylo Ren", new DateTime(1989,1,1));
             Student student3 = new Student("Sheev Palpatine", new DateTime(1950,1,1));
-
+    
             Cursus communicatie = new Cursus("Communicatie",new Student[2]);
             student1.RegistreerCursusResultaat(communicatie, 14);
             student2.RegistreerCursusResultaat(communicatie,13);
@@ -115,11 +126,15 @@ namespace SchoolAdmin
             programmeren.ToonOverzicht();
             webtechnologie.ToonOverzicht();
             databanken.ToonOverzicht(); 
-            /* test methodes
+           
             registreerCursus(programmeren);
             registreerCursus(webtechnologie);
-            Console.WriteLine(ZoekCursusOpId(5).Titel);
-            */
+            Console.WriteLine(ZoekCursusOpId(2).Titel);
+            
+            Console.WriteLine(ZoekCursusOpId(5));
+           
+            
+            
         }
     }
 }
