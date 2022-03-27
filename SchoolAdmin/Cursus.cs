@@ -76,20 +76,19 @@ namespace SchoolAdmin
             } else {
                 Console.WriteLine("Er zijn geen vrije posities meer");
             }
-            */
-           
+            */ 
         }
         public static Cursus ZoekCursusOpId(int id) {
             
-            for (int i = 0; i < AlleCursussen.Count; i++) {
-                if (AlleCursussen[i].Id == id) {
-                    return AlleCursussen[i]; 
+            foreach (var cursus in AlleCursussen) {
+                if (cursus.Id == id) {
+                    return cursus; 
                 }
             }
             return null;
         }
         public static void DemonstreerCursussen() {
-             Console.WriteLine(AlleCursussen.Count);
+
             Cursus.maxId = 1;        //Each method call will stay consistent with maxId.
             Student student1 = new Student("Dimitri Avtenyev",new DateTime(1990,12,2));
             Student student2 = new Student("Kylo Ren", new DateTime(1989,1,1));
@@ -130,11 +129,6 @@ namespace SchoolAdmin
             registreerCursus(programmeren);
             registreerCursus(webtechnologie);
             Console.WriteLine(ZoekCursusOpId(2).Titel);
-            
-            Console.WriteLine(ZoekCursusOpId(5));
-           
-            
-            
         }
     }
 }
