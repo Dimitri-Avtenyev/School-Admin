@@ -14,6 +14,7 @@ namespace SchoolAdmin
                 Console.WriteLine("2. DemonstreerCursussen uitvoeren");
                 Console.WriteLine("3. DemonstreerStudentUitTekstFormaat uitvoeren");
                 Console.WriteLine("4. DemonstreerStudieProgramma uitvoeren");
+                Console.WriteLine("5. DemonstreerAdministratiefPersoneel uitvoeren");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
                     default: 
@@ -33,6 +34,9 @@ namespace SchoolAdmin
                         break;
                     case("4"):
                         StudieProgramma.DemonstreerStudieProgramma();
+                    break;
+                    case("5"):
+                        AdministratiefPersoneel.DemonstreerAdministratiefPersoneel();
                     break;
                 }
             } while(!stop);
