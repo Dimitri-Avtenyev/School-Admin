@@ -5,13 +5,9 @@ using System.Collections.Immutable;
 
 namespace SchoolAdmin
 {
-    class Student
+    class Student : Persoon
     {
-        public string Naam;
-        public DateTime Geboortedatum;
-        public uint Studentennummer;
         private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
-        public static uint StudentenTeller = 1;
         private static List<Student> alleStudenten = new List<Student>();
         
         public static ImmutableList<Student> AlleStudenten {
@@ -20,21 +16,14 @@ namespace SchoolAdmin
             }
         }
         
-        public Student(string naam, DateTime geboorteDatum) {
-            this.Naam = naam;
-            this.Geboortedatum = geboorteDatum;
-            StudentenTeller++;
+        public Student(string naam, DateTime geboorteDatum):base(naam,geboorteDatum) {
             alleStudenten.Add(this);
         }
-        public Student() {
-            StudentenTeller++;
-            alleStudenten.Add(this);
-        }
-        public string GenereerNaamKaartje() {
+        public override string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
         }
-        public byte BepaalWerkbelasting() {
-            byte totaal = 0;
+        public override double BepaalWerkbelasting() {
+            double totaal = 0;
             foreach (var vakInschrijving in vakInschrijvingen) {
                 if(vakInschrijving is not null) {
                     totaal +=10;
@@ -81,16 +70,14 @@ namespace SchoolAdmin
             Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F1}\n");
         }
         public static Student StudentUitTekstFormaat(string cvsWaarde) {
-
+            //input vb: Naam;dd;mm;yyy;cursus;cijfer; ...cursus;cijfer
             string[] cvsWaardes = cvsWaarde.Split(";");
-            Student student = new Student();
             int day = Convert.ToInt32(cvsWaardes[1]);
             int month = Convert.ToInt32(cvsWaardes[2]);
             int year = Convert.ToInt32(cvsWaardes[3]);
-            student.Naam = cvsWaardes[0];
-            student.Geboortedatum = new DateTime(year, month, day);
-            student.Studentennummer = StudentenTeller;
-            Student.StudentenTeller++;
+            string naam = cvsWaardes[0];
+
+            Student student = new Student(naam, new DateTime(year,month,day));;
 
             if(cvsWaardes.Length > 4) {
                 for(int i=4; i<cvsWaardes.Length; i+=2) {
@@ -103,13 +90,8 @@ namespace SchoolAdmin
             return student;
         }
         public static void DemonstreerStudent() {
-
-            Student.StudentenTeller = 1;
-            Student student1 = new Student(); //of constructor met naam,...
-           
-            student1.Naam = "Dimitri Avtenyev"; //demo met properties'set' ipv via constructor
-            student1.Geboortedatum = new DateTime(1990, 12, 2);
-            student1.Studentennummer = Student.StudentenTeller;
+            
+            Student student1 = new Student("Dimitri Avtenyev", new DateTime(1990, 12, 2)); 
             Cursus programmeren = new Cursus("Programmeren");
             Cursus webontwikkeling = new Cursus("Programmeren");
             Cursus databanken = new Cursus("Databanken");
@@ -123,7 +105,6 @@ namespace SchoolAdmin
             student1.ToonOverzicht();
 
             Student student2 = new Student("Kylo Ren",new DateTime(1989, 1, 1));
-            student2.Studentennummer = Student.StudentenTeller;
             student2.RegistreerVakInschrijving(theForce, 19);
             //student2.Kwoteer(0, 19);
             student2.RegistreerVakInschrijving(programmeren, 13);

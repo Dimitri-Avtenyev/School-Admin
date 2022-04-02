@@ -3,12 +3,9 @@ using System.Collections.Generic;
 
 namespace SchoolAdmin
 {
-    class Personeel
+    class Personeel //: Persoon
     {
-        public string Naam = "Personeel";
+       
     }
-    class TestPersoneel : Personeel 
-    {
-        public string Naams = "testPersoneel";
-    }
+ 
 }
