@@ -95,28 +95,28 @@ namespace SchoolAdmin
             Student student3 = new Student("Sheev Palpatine", new DateTime(1950,1,1));
     
             Cursus communicatie = new Cursus("Communicatie",new Student[2]);
-            student1.RegistreerCursusResultaat(communicatie, 14);
-            student2.RegistreerCursusResultaat(communicatie,13);
+            student1.RegistreerVakInschrijving(communicatie, 14);
+            student2.RegistreerVakInschrijving(communicatie,13);
             communicatie.Studenten[0] = student1;
             communicatie.Studenten[1] = student2;
 
             Cursus programmeren = new Cursus("Programmeren");
             programmeren.Studiepunten = 6;
-            student1.RegistreerCursusResultaat(programmeren, 17);
-            student2.RegistreerCursusResultaat(programmeren, 15);
+            student1.RegistreerVakInschrijving(programmeren, 17);
+            student2.RegistreerVakInschrijving(programmeren, 15);
             programmeren.Studenten[0] = student1;
             programmeren.Studenten[1] = student2;
 
             Cursus webtechnologie = new Cursus("Webtechnologie", new Student[5], 6);
-            student1.RegistreerCursusResultaat(webtechnologie, 19);
-            student2.RegistreerCursusResultaat(webtechnologie, 19);
+            student1.RegistreerVakInschrijving(webtechnologie, 19);
+            student2.RegistreerVakInschrijving(webtechnologie, 19);
             webtechnologie.Studenten[0] = student1;
             webtechnologie.Studenten[1] = student2;
             
             Cursus databanken = new Cursus("Databanken", new Student[7], 5);
-            student1.RegistreerCursusResultaat(databanken, 16);
-            student2.RegistreerCursusResultaat(databanken, 15);
-            student1.RegistreerCursusResultaat(databanken, 9);
+            student1.RegistreerVakInschrijving(databanken, 16);
+            student2.RegistreerVakInschrijving(databanken, 15);
+            student1.RegistreerVakInschrijving(databanken, 9);
             databanken.Studenten[0] = student1;
             databanken.Studenten[1] = student2;
             databanken.Studenten[2] = student3;

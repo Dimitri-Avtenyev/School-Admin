@@ -35,26 +35,19 @@ namespace SchoolAdmin
         }
         public byte BepaalWerkbelasting() {
             byte totaal = 0;
-            for (int i=0; i< vakInschrijvingen.Count; i++) {
-                if(this.vakInschrijvingen[i] is not null) {
+            foreach (var vakInschrijving in vakInschrijvingen) {
+                if(vakInschrijving is not null) {
                     totaal +=10;
                 }
             }
             return totaal;
         }
-        public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer) {
+        public void RegistreerVakInschrijving(Cursus cursus, byte? cijfer) {
 
-            int vrijePositie = -1;
-            for(int i=0; i<vakInschrijvingen.Count && vrijePositie == -1; i++) {
-                if(this.vakInschrijvingen[i] is null) {
-                    vrijePositie = i;
-                }
-            }
-            if(vrijePositie > -1) {
-                VakInschrijving nieuwCursusResultaat = new VakInschrijving(cursus, cijfer);
-                this.vakInschrijvingen[vrijePositie] = nieuwCursusResultaat;
-            }
+            VakInschrijving nieuwVakInschrijving = new VakInschrijving(cursus, cijfer);
+            vakInschrijvingen.Add(nieuwVakInschrijving);
         }
+        //older method (H10), before lists/foreach
         public void Kwoteer(byte cursusindex,byte behaaldCijfer) {
             if(behaaldCijfer<0 || behaaldCijfer >20 || cursusindex>vakInschrijvingen.Count || vakInschrijvingen[cursusindex] is null) {
                 Console.WriteLine("Ongeldig cijfer!");
@@ -67,9 +60,9 @@ namespace SchoolAdmin
             double gemiddelde = 0.0;
             double som = 0;
             byte counter = 0;
-            for(int i=0; i<this.vakInschrijvingen.Count; i++) {
-                if(vakInschrijvingen[i] != null && vakInschrijvingen[i].Resultaat is not null) {
-                    som += (byte)vakInschrijvingen[i].Resultaat;
+            foreach(var vakInschrijving in vakInschrijvingen) {
+                if(vakInschrijving is not null) {
+                    som += (byte)vakInschrijving.Resultaat;
                     counter++;
                 }
             }
@@ -104,7 +97,7 @@ namespace SchoolAdmin
                     string cursusNaam = cvsWaardes[i]; 
                     Cursus cursus = new Cursus(cursusNaam);
                     byte cijfer = Convert.ToByte(cvsWaardes[i+1]);
-                    student.RegistreerCursusResultaat(cursus, cijfer);
+                    student.RegistreerVakInschrijving(cursus, cijfer);
                 }
             }           
             return student;
@@ -121,21 +114,21 @@ namespace SchoolAdmin
             Cursus webontwikkeling = new Cursus("Programmeren");
             Cursus databanken = new Cursus("Databanken");
             Cursus theForce = new Cursus("The Force");
-            student1.RegistreerCursusResultaat(programmeren, 17);
+            student1.RegistreerVakInschrijving(programmeren, 17);
             //student1.Kwoteer(0,17);
-            student1.RegistreerCursusResultaat(webontwikkeling, 18);
+            student1.RegistreerVakInschrijving(webontwikkeling, 18);
             //student1.Kwoteer(1, 18);
-            student1.RegistreerCursusResultaat(databanken, 16);
+            student1.RegistreerVakInschrijving(databanken, 16);
             //student1.Kwoteer(2, 16);
             student1.ToonOverzicht();
 
             Student student2 = new Student("Kylo Ren",new DateTime(1989, 1, 1));
             student2.Studentennummer = Student.StudentenTeller;
-            student2.RegistreerCursusResultaat(theForce, 19);
+            student2.RegistreerVakInschrijving(theForce, 19);
             //student2.Kwoteer(0, 19);
-            student2.RegistreerCursusResultaat(programmeren, 13);
+            student2.RegistreerVakInschrijving(programmeren, 13);
             //student2.Kwoteer(1, 13);
-            student2.RegistreerCursusResultaat(databanken, 9);
+            student2.RegistreerVakInschrijving(databanken, 9);
             //student2.Kwoteer(2, 9);
             student2.ToonOverzicht();
         }
