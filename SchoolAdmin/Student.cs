@@ -15,6 +15,12 @@ namespace SchoolAdmin
                 return alleStudenten.ToImmutableList();
             }
         }
+        private Dictionary<DateTime, string> dossier;
+        public ImmutableDictionary<DateTime, string> Dossier {
+            get {
+                return dossier.ToImmutableDictionary();
+            }
+        }
         
         public Student(string naam, DateTime geboorteDatum):base(naam,geboorteDatum) {
             alleStudenten.Add(this);
