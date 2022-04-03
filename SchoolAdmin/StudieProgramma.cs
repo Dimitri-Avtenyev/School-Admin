@@ -43,7 +43,7 @@ namespace SchoolAdmin
         public static void DemonstreerStudieProgramma() {
         Cursus communicatie = new Cursus("Communicatie");
         Cursus programmeren = new Cursus("Programmeren");
-        Cursus databanken = new Cursus("Databanken", new Student[7], 5);
+        Cursus databanken = new Cursus("Databanken", new List<Student>(7), 5);
 
         Cursus[] cursussenCollectie1 = { communicatie, programmeren, databanken };
         Cursus[] cursussenCollectie2 = { communicatie, programmeren, databanken };

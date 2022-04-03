@@ -31,6 +31,7 @@ namespace SchoolAdmin
         public Persoon(string naam, DateTime geboortedatum) {
             this.Naam = naam;
             this.geboortedatum = geboortedatum;
+            allePersonen.Add(this);
             this.id = maxId;
             maxId++;
         }

@@ -26,7 +26,7 @@ namespace SchoolAdmin
                 }
             }
         } 
-        private Dictionary<string, byte> taken;
+        private Dictionary<string, byte> taken = new Dictionary<string, byte>();
         public ImmutableDictionary<string, byte> Taken {
             get {
                 Dictionary<string, byte> tempDictionary = new Dictionary<string, byte>();
@@ -43,9 +43,6 @@ namespace SchoolAdmin
            allePersoneel.Add(this);
        }
        public abstract uint BerekenSalaris();
-
-    
-
     }
  
 }

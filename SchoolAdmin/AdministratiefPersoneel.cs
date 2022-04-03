@@ -40,13 +40,21 @@ namespace SchoolAdmin
                 };
             AdministratiefPersoneel ahmed = new AdministratiefPersoneel("Ahmed Azzaoui", new DateTime(1988,2,4),taken);
             ahmed.Ancienniteit = 4;
+            //ahmed.Ancienniteit = 60; 
 
+            //Intermezzo controle AllePersoneel && AlleAdministratiefPersoneel
+            Console.WriteLine(">>>Personeel<<<\n"+"-".PadRight(">>>Personeel<<<".Length,'-'));
+            foreach(var personeel in Personeel.AllePersoneel) {
+                Console.WriteLine(personeel.GenereerNaamKaartje());
+            }
+            Console.WriteLine("-".PadRight(">>>Personeel<<<".Length,'-'));
+            Console.WriteLine(">>>Administratief personeel<<<\n"+"-".PadRight(">>>Administratief personeel<<<".Length,'-'));
             foreach(var personeel in AlleAdministratiefPersoneel) {
                 Console.WriteLine(personeel.GenereerNaamKaartje());
-                Console.WriteLine(("***".PadRight(personeel.GenereerNaamKaartje().Length,'*')));
                 Console.WriteLine($"Werkbelasting: {ahmed.BepaalWerkbelasting()} uur");
                 Console.WriteLine($"Salaris: {ahmed.BerekenSalaris()} euro");
             }
+            Console.WriteLine("-".PadRight(">>>Administratief personeel<<<".Length,'-'));
         }
     }
 }

@@ -4,7 +4,6 @@ namespace SchoolAdmin
 {
     class VakInschrijving
     {
-        //private string naam;
         private Cursus cursus;
         private byte? resultaat;
         public VakInschrijving(Cursus cursus, byte? resultaat) {

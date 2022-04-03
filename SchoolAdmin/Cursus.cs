@@ -7,22 +7,23 @@ namespace SchoolAdmin
     class Cursus
     {
         public string Titel;
-        public Student[] Studenten;
+        public List<Student> Studenten;
         private int id;
         private static int maxId = 1;
         private byte studiepunten;
         private static List<Cursus> alleCursussen = new List<Cursus>(10);
-        public Cursus(string titel, Student[] studenten, byte studiepunten) {
+        public Cursus(string titel, List<Student> studenten, byte studiepunten) {
             this.Titel = titel;
             this.Studenten = studenten;
             this.Studiepunten = studiepunten;
+            //alleCursussen.Add(this); ipv registreerCursus?
             this.id = maxId;
             MaxId++;    
         }
-        public Cursus(string titel, Student[] studenten):this(titel, studenten, 3) {
+        public Cursus(string titel, List<Student> studenten):this(titel, studenten, 3) {
          
         }
-        public Cursus(string titel):this(titel, new Student[2], 3) {
+        public Cursus(string titel):this(titel, new List<Student>(2), 3) {
       
         }
         public byte Studiepunten {
@@ -94,32 +95,32 @@ namespace SchoolAdmin
             Student student2 = new Student("Kylo Ren", new DateTime(1989,1,1));
             Student student3 = new Student("Sheev Palpatine", new DateTime(1950,1,1));
     
-            Cursus communicatie = new Cursus("Communicatie",new Student[2]);
+            Cursus communicatie = new Cursus("Communicatie",new List<Student>(2));
             student1.RegistreerVakInschrijving(communicatie, 14);
             student2.RegistreerVakInschrijving(communicatie,13);
-            communicatie.Studenten[0] = student1;
-            communicatie.Studenten[1] = student2;
-
+            communicatie.Studenten.Add(student1);
+            communicatie.Studenten.Add(student2);
+            
             Cursus programmeren = new Cursus("Programmeren");
             programmeren.Studiepunten = 6;
             student1.RegistreerVakInschrijving(programmeren, 17);
             student2.RegistreerVakInschrijving(programmeren, 15);
-            programmeren.Studenten[0] = student1;
-            programmeren.Studenten[1] = student2;
+            programmeren.Studenten.Add(student1);
+            programmeren.Studenten.Add(student2);
 
-            Cursus webtechnologie = new Cursus("Webtechnologie", new Student[5], 6);
+            Cursus webtechnologie = new Cursus("Webtechnologie", new List<Student>(5), 6);
             student1.RegistreerVakInschrijving(webtechnologie, 19);
             student2.RegistreerVakInschrijving(webtechnologie, 19);
-            webtechnologie.Studenten[0] = student1;
-            webtechnologie.Studenten[1] = student2;
+            webtechnologie.Studenten.Add(student1);
+            webtechnologie.Studenten.Add(student2);
             
-            Cursus databanken = new Cursus("Databanken", new Student[7], 5);
+            Cursus databanken = new Cursus("Databanken", new List<Student>(7), 5);
             student1.RegistreerVakInschrijving(databanken, 16);
             student2.RegistreerVakInschrijving(databanken, 15);
             student1.RegistreerVakInschrijving(databanken, 9);
-            databanken.Studenten[0] = student1;
-            databanken.Studenten[1] = student2;
-            databanken.Studenten[2] = student3;
+            databanken.Studenten.Add(student1);
+            databanken.Studenten.Add(student2);
+            databanken.Studenten.Add(student3);
 
             communicatie.ToonOverzicht();
             programmeren.ToonOverzicht();
