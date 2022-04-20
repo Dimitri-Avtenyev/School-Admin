@@ -16,8 +16,7 @@ namespace SchoolAdmin
         public byte Ancienniteit {
             get {
                 return this.ancienniteit;
-            }
-            set {
+            } set {
                 if(value<50) {
                     this.ancienniteit = value;
                 } else {

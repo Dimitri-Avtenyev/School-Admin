@@ -61,7 +61,7 @@ namespace SchoolAdmin
                 Console.WriteLine($"Werkbelasting: {anna.BepaalWerkbelasting()} uur");
                 Console.WriteLine($"Salaris: {anna.BerekenSalaris()} euro");
             }
-            Console.WriteLine($"Aantal personeel: {AllePersoneel.Count} // Aantal lectoren: {AlleLectoren.Count}");
+            //Console.WriteLine($"Aantal personeel: {AllePersoneel.Count} // Aantal lectoren: {AlleLectoren.Count}");
         }
     }
 }

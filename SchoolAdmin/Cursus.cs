@@ -29,11 +29,10 @@ namespace SchoolAdmin
         public byte Studiepunten {
             get {
                 return studiepunten;
-            }
-            private set {
+            } private set {
                 studiepunten = value;
             }
-    }
+        }
         public int Id {
             get {
                 return id;
@@ -42,8 +41,7 @@ namespace SchoolAdmin
         public int MaxId {
             get {
                 return maxId;
-            }
-            set {
+            } set {
                 maxId = value;
             }
         }
@@ -51,6 +49,26 @@ namespace SchoolAdmin
             get {
                 return alleCursussen.ToImmutableList();
             }
+        }
+        public override bool Equals(Object obj) {
+            if(obj is null) {
+                return false;
+            } 
+            bool gelijk; 
+            if(GetType() != obj.GetType()) {
+                gelijk = false;
+            } else {
+                Cursus temp = (Cursus)obj;
+                if(Id == temp.Id) {
+                    gelijk = true;
+                } else {
+                    gelijk = false;
+                }
+            }
+            return gelijk;
+        }
+        public override int GetHashCode() {
+            return this.Id.GetHashCode();
         }
         public void ToonOverzicht() {
 

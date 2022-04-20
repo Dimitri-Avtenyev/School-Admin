@@ -10,8 +10,7 @@ namespace SchoolAdmin
         public string Naam {
             get {
                 return this.naam;
-            }
-            set {
+            } set {
                 this.naam = value;
             }
         }
@@ -43,6 +42,27 @@ namespace SchoolAdmin
         }
         public abstract string GenereerNaamKaartje();
         public abstract double BepaalWerkbelasting();
-         
+
+        public override bool Equals(Object obj) {
+            if(obj is null) {
+                return false;
+            } 
+            bool gelijk; 
+            if(GetType() != obj.GetType()) {
+                gelijk = false;
+            } else {
+                Persoon temp = (Persoon)obj;
+                if(Id == temp.Id) {
+                    gelijk = true;
+                } else {
+                    gelijk = false;
+                }
+            }
+            return gelijk;
+        }
+        public override int GetHashCode() {
+            return this.Id.GetHashCode();
+        }
     }
+
 }

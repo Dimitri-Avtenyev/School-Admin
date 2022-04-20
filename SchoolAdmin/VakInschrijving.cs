@@ -18,8 +18,7 @@ namespace SchoolAdmin
         public byte? Resultaat {
             get {
                 return this.resultaat;
-            }
-            set {
+            } set {
                 if(value is null || value>=0 && value<=20) {
                     this.resultaat = value;
                 } else {

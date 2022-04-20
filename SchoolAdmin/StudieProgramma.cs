@@ -10,8 +10,7 @@ namespace SchoolAdmin
         public string Naam {
             get {
                 return naam;
-            }
-            set {
+            } set {
                 naam = value;
             }
         }
@@ -19,8 +18,7 @@ namespace SchoolAdmin
         public List<Cursus> Cursussen{
             get {
                 return cursussen;
-            }
-            set {
+            } set {
                 if(value is not null) {
                     cursussen = value;
                 } else {
