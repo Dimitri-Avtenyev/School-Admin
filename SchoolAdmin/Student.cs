@@ -12,7 +12,13 @@ namespace SchoolAdmin
         
         public static ImmutableList<Student> AlleStudenten {
             get {
-                return alleStudenten.ToImmutableList();
+                List<Student> tempAlleStudenten = new List<Student>();
+                foreach(var persoon in Persoon.AllePersonen) {
+                    if(persoon is Student) {
+                        tempAlleStudenten.Add((Student)persoon);
+                    }
+                }
+                return tempAlleStudenten.ToImmutableList();
             }
         }
         private Dictionary<DateTime, string> dossier;
@@ -23,7 +29,7 @@ namespace SchoolAdmin
         }
         
         public Student(string naam, DateTime geboorteDatum):base(naam,geboorteDatum) {
-            alleStudenten.Add(this);
+       
         }
         public override string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
@@ -118,6 +124,10 @@ namespace SchoolAdmin
             student2.RegistreerVakInschrijving(databanken, 9);
             //student2.Kwoteer(2, 9);
             student2.ToonOverzicht();
+            
+            //Test List AlleStudenten/AllePersonen
+            Console.WriteLine(AlleStudenten[0].Naam);
+            Console.WriteLine(AllePersonen[0].Naam);
         }
         public static void DemonstreerStudentUitTekstFormaat() {
             Console.WriteLine("Geef de tekstvoorstelling van 1 student in CSV-formaat: ");

@@ -27,6 +27,13 @@ namespace SchoolAdmin
                 return this.geboortedatum;
             }
         }
+        public byte Leeftijd {
+            get {
+                DateTime nu = DateTime.Now;
+                
+                return (byte)(nu.Year - this.Geboortedatum.Year);
+            }
+        }
         public Persoon(string naam, DateTime geboortedatum) {
             this.Naam = naam;
             this.geboortedatum = geboortedatum;
@@ -62,6 +69,18 @@ namespace SchoolAdmin
         }
         public override int GetHashCode() {
             return this.Id.GetHashCode();
+        }
+        public override string ToString() {
+            string persoonFunctie = "";
+            if(this.GetType().Name == "AdministratiesPersoneel") {
+                persoonFunctie = "administratief personeel";
+            } else if(this.GetType().Name == "Lector") {
+                persoonFunctie = "Lector";
+            } else if(this.GetType().Name == "Student") {
+                persoonFunctie = "Student";
+            }
+            string naamKaartje = $"Persoon\n-------\nNaam: {this.Naam}\nLeeftijd: {this.Leeftijd}\nMeerbepaald, {persoonFunctie}";
+            return naamKaartje.ToString();
         }
     }
 

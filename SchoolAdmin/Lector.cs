@@ -10,12 +10,18 @@ namespace SchoolAdmin
         private static List<Lector> alleLectoren = new List<Lector>();
         public static ImmutableList<Lector> AlleLectoren {
             get {
-                return alleLectoren.ToImmutableList();
+                List<Lector> tempAlleLectoren = new List<Lector>();
+                foreach(var persoon in Persoon.AllePersonen) {
+                    if(persoon is Lector) {
+                        tempAlleLectoren.Add((Lector)persoon);
+                    }
+                }
+                return tempAlleLectoren.ToImmutableList();
             }
         }
         private Dictionary<Cursus, double> cursussen = new Dictionary<Cursus, double>();
         public Lector(string naam, DateTime geboortedatum, Dictionary<string, byte> taken):base(naam, geboortedatum, taken) {
-            alleLectoren.Add(this);
+            
         }
         public override string GenereerNaamKaartje() {
             string naamKaartje = $"{this.Naam} (LECTOR)\nLector voor:\n";
@@ -49,7 +55,6 @@ namespace SchoolAdmin
             anna.cursussen.Add(economie,3);
             anna.cursussen.Add(statistiek,3);
             anna.cursussen.Add(analytischeMeetkunde,4);
-            
             //Intermezzo controle AllePersoneel && AlleLectoren
             Console.WriteLine("Personeel\n"+"-".PadRight("Personeel".Length,'-'));
             foreach(var personeel in Personeel.AllePersoneel) {

@@ -9,7 +9,14 @@ namespace SchoolAdmin
         private static List<Personeel> allePersoneel = new List<Personeel>();
         public static ImmutableList<Personeel> AllePersoneel {
             get {
-                return allePersoneel.ToImmutableList();
+                  List<Personeel> tempAllePersoneel = new List<Personeel>();
+                    foreach(var persoon in Persoon.AllePersonen) {
+                        if(persoon is Personeel) {
+                            tempAllePersoneel.Add((Personeel)persoon);
+                        }
+                    }
+                return tempAllePersoneel.ToImmutableList();
+                
             }
         }
         private byte ancienniteit;
@@ -39,7 +46,6 @@ namespace SchoolAdmin
         } 
        public Personeel(string naam, DateTime geboortedatum, Dictionary<string, byte> taken):base(naam, geboortedatum) {
            this.taken = taken;
-           allePersoneel.Add(this);
        }
        public abstract uint BerekenSalaris();
     }

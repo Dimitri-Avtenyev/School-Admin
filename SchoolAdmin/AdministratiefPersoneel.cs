@@ -9,11 +9,17 @@ namespace SchoolAdmin
         private static List<AdministratiefPersoneel> alleAdministratiefPersoneel = new List<AdministratiefPersoneel>();
         public static ImmutableList<AdministratiefPersoneel> AlleAdministratiefPersoneel {
             get {
-                return alleAdministratiefPersoneel.ToImmutableList();
+                List<AdministratiefPersoneel> tempAlleAdministratiefPersoneel = new List<AdministratiefPersoneel>();
+                foreach(var persoon in Persoon.AllePersonen) {
+                    if(persoon is AdministratiefPersoneel) {
+                        tempAlleAdministratiefPersoneel.Add((AdministratiefPersoneel)persoon);
+                    }
+                }
+                return tempAlleAdministratiefPersoneel.ToImmutableList();
             }
         }  
         public AdministratiefPersoneel(string naam, DateTime geboortedatum, Dictionary<string,byte> taken ):base(naam,geboortedatum,taken) {
-            alleAdministratiefPersoneel.Add(this);
+          
         }
         public override string GenereerNaamKaartje() {
             return $"{this.Naam} (ADMINISTRATIE)";
