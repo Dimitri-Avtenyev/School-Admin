@@ -21,16 +21,16 @@ namespace SchoolAdmin
                 return tempAlleStudenten.ToImmutableList();
             }
         }
-        private Dictionary<DateTime, string> dossier;
+        private Dictionary<DateTime, string> dossier = new Dictionary<DateTime, string>();
         public ImmutableDictionary<DateTime, string> Dossier {
             get {
                 return dossier.ToImmutableDictionary();
             }
-        }
-        
+        } 
         public Student(string naam, DateTime geboorteDatum):base(naam,geboorteDatum) {
        
         }
+
         public override string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
         }
@@ -76,7 +76,7 @@ namespace SchoolAdmin
             Console.WriteLine("\nCijferrapport:\n"+$"{"*******".PadRight("Cijferrapport:".Length,'*')}\n");
             foreach(var vakinschrijving in vakInschrijvingen) {
                 if(vakinschrijving is not null) {
-                    Console.WriteLine($"{vakinschrijving.Naam}:".PadRight(20)+$"{vakinschrijving.Resultaat}"); 
+                    Console.WriteLine($"{vakinschrijving.Cursus.Titel}:".PadRight(20)+$"{vakinschrijving.Resultaat}"); 
                 }
             }
             Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F1}\n");
@@ -109,6 +109,14 @@ namespace SchoolAdmin
             Cursus databanken = new Cursus("Databanken");
             Cursus theForce = new Cursus("The Force");
             student1.RegistreerVakInschrijving(programmeren, 17);
+            
+            //Test met dossier
+            // student1.dossier.Add(DateTime.Now, "dossier item test");
+            
+            // foreach(var item in student1.dossier) {
+            //     Console.WriteLine(item);
+            // }
+
             //student1.Kwoteer(0,17);
             student1.RegistreerVakInschrijving(webontwikkeling, 18);
             //student1.Kwoteer(1, 18);
@@ -133,6 +141,13 @@ namespace SchoolAdmin
             Console.WriteLine("Geef de tekstvoorstelling van 1 student in CSV-formaat: ");
             string userInput = Console.ReadLine();
             StudentUitTekstFormaat(userInput).ToonOverzicht();
+        }
+        public static void StudentToevoegen() {
+            Console.WriteLine("Naam van de student?");
+            string naam = Console.ReadLine();
+            Console.WriteLine("Geboortedatum van de student? ()");
+            string geboorteDatum = Console.ReadLine();
+            Student student = new Student(naam, DateTime.Parse(geboorteDatum));
         }
 
     }

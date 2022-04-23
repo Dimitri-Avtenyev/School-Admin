@@ -1,21 +1,19 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace SchoolAdmin 
 {
     class VakInschrijving
     {
         private Cursus cursus;
-        private byte? resultaat;
-        public VakInschrijving(Cursus cursus, byte? resultaat) {
-            this.cursus =  cursus;
-            this.Resultaat = resultaat;
-        }
-        public string Naam {
+        public Cursus Cursus {
             get {
-                return this.cursus.Titel;
+            return cursus;
             }
         }
-        public byte? Resultaat {
+        private byte? resultaat;
+             public byte? Resultaat {
             get {
                 return this.resultaat;
             } set {
@@ -26,5 +24,16 @@ namespace SchoolAdmin
                 }
             }
         }
+        private static List<VakInschrijving> alleVakInschrijvingen = new List<VakInschrijving>();
+        public static ImmutableList<VakInschrijving> AlleVakInschrijvingen {
+            get {
+                return alleVakInschrijvingen.ToImmutableList();
+            }
+        }
+        public VakInschrijving(Cursus cursus, byte? resultaat) {
+            this.cursus =  cursus;
+            this.Resultaat = resultaat;
+            alleVakInschrijvingen.Add(this);
+        } 
     }
 }

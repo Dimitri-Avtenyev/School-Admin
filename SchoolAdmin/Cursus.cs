@@ -26,6 +26,9 @@ namespace SchoolAdmin
         public Cursus(string titel):this(titel, new List<Student>(2), 3) {
       
         }
+        public Cursus(string titel, byte studiepunten):this(titel, new List<Student>()) {
+
+        }
         public byte Studiepunten {
             get {
                 return studiepunten;
@@ -83,19 +86,19 @@ namespace SchoolAdmin
         }
         private static void registreerCursus(Cursus cursus){
             alleCursussen.Add(cursus);
-            /* --Voor verandering van List<Cursus> alleCursussen--
-            int? vrijePositie = null;
-            for(int i=0; i<AlleCursussen.Count && vrijePositie is null; i++){
-                if(AlleCursussen[i] is null) {
-                    vrijePositie = i;
-                }
-            }
-            if(vrijePositie is not null) {
-                alleCursussen.Insert((int)vrijePositie, cursus);
-            } else {
-                Console.WriteLine("Er zijn geen vrije posities meer");
-            }
-            */ 
+            //  --Voor verandering van List<Cursus> alleCursussen--
+            // int? vrijePositie = null;
+            // for(int i=0; i<AlleCursussen.Count && vrijePositie is null; i++){
+            //     if(AlleCursussen[i] is null) {
+            //         vrijePositie = i;
+            //     }
+            // }
+            // if(vrijePositie is not null) {
+            //     alleCursussen.Insert((int)vrijePositie, cursus);
+            // } else {
+            //     Console.WriteLine("Er zijn geen vrije posities meer");
+            // }
+            
         }
         public static Cursus ZoekCursusOpId(int id) {
             
@@ -148,6 +151,15 @@ namespace SchoolAdmin
             registreerCursus(programmeren);
             registreerCursus(webtechnologie);
             Console.WriteLine(ZoekCursusOpId(2).Titel);
+        }
+        public static void CursusToevoegen() {
+            Console.WriteLine("Titel van de cursus?");
+            string titel = Console.ReadLine();
+            Console.WriteLine("Aantal studiepunten?");
+            byte studiepunten = Convert.ToByte(Console.ReadLine());
+
+            Cursus cursus = new Cursus(titel, studiepunten);
+
         }
     }
 }

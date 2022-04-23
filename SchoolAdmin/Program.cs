@@ -16,6 +16,10 @@ namespace SchoolAdmin
                 Console.WriteLine("4. DemonstreerStudieProgramma uitvoeren");
                 Console.WriteLine("5. DemonstreerAdministratiefPersoneel uitvoeren");
                 Console.WriteLine("6. DemonstreerLectoren uitvoeren");
+                Console.WriteLine("7. Student toevoegen");
+                Console.WriteLine("8. Cursus toevoegen");
+                Console.WriteLine("9. VakInschrijving toevoegen");
+                Console.WriteLine("10. Inschrijvingsgegevens tonen");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
                     default: 
@@ -41,6 +45,18 @@ namespace SchoolAdmin
                     break;
                     case("6"):
                         Lector.DemonstreerLectoren();
+                    break;
+                    case("7"):
+                        Student.StudentToevoegen();
+                    break;
+                    case("8"):
+                        Cursus.CursusToevoegen();
+                    break;
+                    case("9"):
+                        
+                    break;
+                    case("10"):
+                       
                     break;
                 }
             } while(!stop);

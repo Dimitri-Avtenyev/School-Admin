@@ -75,9 +75,9 @@ namespace SchoolAdmin
             if(this.GetType().Name == "AdministratiesPersoneel") {
                 persoonFunctie = "administratief personeel";
             } else if(this.GetType().Name == "Lector") {
-                persoonFunctie = "Lector";
+                persoonFunctie = "lector";
             } else if(this.GetType().Name == "Student") {
-                persoonFunctie = "Student";
+                persoonFunctie = "student";
             }
             string naamKaartje = $"Persoon\n-------\nNaam: {this.Naam}\nLeeftijd: {this.Leeftijd}\nMeerbepaald, {persoonFunctie}";
             return naamKaartje.ToString();
