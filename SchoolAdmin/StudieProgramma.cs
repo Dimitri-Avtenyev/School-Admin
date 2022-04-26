@@ -41,7 +41,7 @@ namespace SchoolAdmin
         public static void DemonstreerStudieProgramma() {
         Cursus communicatie = new Cursus("Communicatie");
         Cursus programmeren = new Cursus("Programmeren");
-        Cursus databanken = new Cursus("Databanken", new List<Student>(7), 5);
+        Cursus databanken = new Cursus("Databanken", 5);
 
         Dictionary<Cursus, byte> cursussenVoorProgrammeren = new Dictionary<Cursus, byte>() {
             {communicatie, 1}, {programmeren, 1}, {databanken, 1}

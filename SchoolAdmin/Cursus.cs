@@ -7,28 +7,14 @@ namespace SchoolAdmin
     class Cursus
     {
         public string Titel;
-        public List<Student> Studenten;
-        private int id;
         private static int maxId = 1;
+        private static List<Cursus> alleCursussen = new List<Cursus>();
+        public static ImmutableList<Cursus> AlleCursussen {
+            get {
+            return alleCursussen.ToImmutableList();
+            }
+        }
         private byte studiepunten;
-        private static List<Cursus> alleCursussen = new List<Cursus>(10);
-        public Cursus(string titel, List<Student> studenten, byte studiepunten) {
-            this.Titel = titel;
-            this.Studenten = studenten;
-            this.Studiepunten = studiepunten;
-            //alleCursussen.Add(this); ipv registreerCursus?
-            this.id = maxId;
-            MaxId++;    
-        }
-        public Cursus(string titel, List<Student> studenten):this(titel, studenten, 3) {
-         
-        }
-        public Cursus(string titel):this(titel, new List<Student>(2), 3) {
-      
-        }
-        public Cursus(string titel, byte studiepunten):this(titel, new List<Student>()) {
-
-        }
         public byte Studiepunten {
             get {
                 return studiepunten;
@@ -36,6 +22,7 @@ namespace SchoolAdmin
                 studiepunten = value;
             }
         }
+        private int id;
         public int Id {
             get {
                 return id;
@@ -48,11 +35,39 @@ namespace SchoolAdmin
                 maxId = value;
             }
         }
-        public static ImmutableList<Cursus> AlleCursussen {
+        public ImmutableList<Student> Studenten {
             get {
-                return alleCursussen.ToImmutableList();
+                List<Student> tempStudenten = new List<Student>();
+                foreach(var vakinschrijving in VakInschrijvingen) {
+                    
+                        tempStudenten.Add(vakinschrijving.Student);
+                    
+                }   
+                return tempStudenten.ToImmutableList();
             }
         }
+        // VakInschrijving(Student student, Cursus cursus, byte? resultaat)
+        public ImmutableList<VakInschrijving> VakInschrijvingen {
+            get {
+                List<VakInschrijving> tempVakinschrijvingen = new List<VakInschrijving>();
+                foreach(var vak in VakInschrijving.AlleVakInschrijvingen) {
+                    if(vak.Cursus.Equals(this)) {
+                        tempVakinschrijvingen.Add(vak);
+                    }
+                }
+                return tempVakinschrijvingen.ToImmutableList();
+            }
+        }
+        public Cursus(string titel, byte studiepunten) {
+            this.Titel = titel;
+            this.Studiepunten = studiepunten;
+            registreerCursus(this);
+            this.id = maxId;
+        }
+        public Cursus(string titel):this(titel, 3) {
+
+        }
+
         public override bool Equals(Object obj) {
             if(obj is null) {
                 return false;
@@ -62,7 +77,7 @@ namespace SchoolAdmin
                 gelijk = false;
             } else {
                 Cursus temp = (Cursus)obj;
-                if(Id == temp.Id) {
+                if(this.Id == temp.Id) {
                     gelijk = true;
                 } else {
                     gelijk = false;
@@ -73,9 +88,10 @@ namespace SchoolAdmin
         public override int GetHashCode() {
             return this.Id.GetHashCode();
         }
+
         public void ToonOverzicht() {
 
-            Console.WriteLine($"--- ({this.Id}): {this.studiepunten}stp {this.Titel} ---");
+            Console.WriteLine($"--- ({this.Id}): {this.Studiepunten}stp {this.Titel} ---");
 
             foreach(var student in Studenten){
                 if(student is not null) {
@@ -85,20 +101,10 @@ namespace SchoolAdmin
             Console.WriteLine("\n");
         }
         private static void registreerCursus(Cursus cursus){
-            alleCursussen.Add(cursus);
-            //  --Voor verandering van List<Cursus> alleCursussen--
-            // int? vrijePositie = null;
-            // for(int i=0; i<AlleCursussen.Count && vrijePositie is null; i++){
-            //     if(AlleCursussen[i] is null) {
-            //         vrijePositie = i;
-            //     }
-            // }
-            // if(vrijePositie is not null) {
-            //     alleCursussen.Insert((int)vrijePositie, cursus);
-            // } else {
-            //     Console.WriteLine("Er zijn geen vrije posities meer");
-            // }
             
+            alleCursussen.Add(cursus);
+            maxId++;
+        
         }
         public static Cursus ZoekCursusOpId(int id) {
             
@@ -116,41 +122,39 @@ namespace SchoolAdmin
             Student student2 = new Student("Kylo Ren", new DateTime(1989,1,1));
             Student student3 = new Student("Sheev Palpatine", new DateTime(1950,1,1));
     
-            Cursus communicatie = new Cursus("Communicatie",new List<Student>(2));
+            Cursus communicatie = new Cursus("Communicatie");
             student1.RegistreerVakInschrijving(communicatie, 14);
             student2.RegistreerVakInschrijving(communicatie,13);
-            communicatie.Studenten.Add(student1);
-            communicatie.Studenten.Add(student2);
-            
+
             Cursus programmeren = new Cursus("Programmeren");
             programmeren.Studiepunten = 6;
             student1.RegistreerVakInschrijving(programmeren, 17);
             student2.RegistreerVakInschrijving(programmeren, 15);
-            programmeren.Studenten.Add(student1);
-            programmeren.Studenten.Add(student2);
 
-            Cursus webtechnologie = new Cursus("Webtechnologie", new List<Student>(5), 6);
+            Cursus webtechnologie = new Cursus("Webtechnologie", 6);
             student1.RegistreerVakInschrijving(webtechnologie, 19);
             student2.RegistreerVakInschrijving(webtechnologie, 19);
-            webtechnologie.Studenten.Add(student1);
-            webtechnologie.Studenten.Add(student2);
-            
-            Cursus databanken = new Cursus("Databanken", new List<Student>(7), 5);
+
+            Cursus databanken = new Cursus("Databanken", 5);
             student1.RegistreerVakInschrijving(databanken, 16);
             student2.RegistreerVakInschrijving(databanken, 15);
-            student1.RegistreerVakInschrijving(databanken, 9);
-            databanken.Studenten.Add(student1);
-            databanken.Studenten.Add(student2);
-            databanken.Studenten.Add(student3);
+            student3.RegistreerVakInschrijving(databanken, 9);
 
             communicatie.ToonOverzicht();
             programmeren.ToonOverzicht();
             webtechnologie.ToonOverzicht();
-            databanken.ToonOverzicht(); 
-           
-            registreerCursus(programmeren);
-            registreerCursus(webtechnologie);
-            Console.WriteLine(ZoekCursusOpId(2).Titel);
+            databanken.ToonOverzicht();     
+
+            // --- TEST tweerichtingsverkeer vakinschrijvingen binnen cursus-- 
+            // foreach(var vakinschrijving in student3.VakInschrijvingen) {
+            //     Console.WriteLine(vakinschrijving.Student.Naam);
+            //     Console.WriteLine(vakinschrijving.Cursus.Titel);
+            // }
+            // Console.WriteLine("-----");
+            // foreach(var student in programmeren.Studenten) {
+            //     Console.WriteLine(student.Naam);
+            // }
+
         }
         public static void CursusToevoegen() {
             Console.WriteLine("Titel van de cursus?");
