@@ -11,7 +11,7 @@ namespace SchoolAdmin
         private static List<Cursus> alleCursussen = new List<Cursus>();
         public static ImmutableList<Cursus> AlleCursussen {
             get {
-            return alleCursussen.ToImmutableList();
+            return alleCursussen.ToImmutableList<Cursus>();
             }
         }
         private byte studiepunten;
@@ -39,11 +39,9 @@ namespace SchoolAdmin
             get {
                 List<Student> tempStudenten = new List<Student>();
                 foreach(var vakinschrijving in VakInschrijvingen) {
-                    
-                        tempStudenten.Add(vakinschrijving.Student);
-                    
+                    tempStudenten.Add(vakinschrijving.Student);  
                 }   
-                return tempStudenten.ToImmutableList();
+                return tempStudenten.ToImmutableList<Student>();
             }
         }
         // VakInschrijving(Student student, Cursus cursus, byte? resultaat)
@@ -55,14 +53,15 @@ namespace SchoolAdmin
                         tempVakinschrijvingen.Add(vak);
                     }
                 }
-                return tempVakinschrijvingen.ToImmutableList();
+                return tempVakinschrijvingen.ToImmutableList<VakInschrijving>();
             }
         }
         public Cursus(string titel, byte studiepunten) {
             this.Titel = titel;
             this.Studiepunten = studiepunten;
+            Cursus.maxId++;
             registreerCursus(this);
-            this.id = maxId;
+            this.id = Cursus.maxId;
         }
         public Cursus(string titel):this(titel, 3) {
 
@@ -101,10 +100,7 @@ namespace SchoolAdmin
             Console.WriteLine("\n");
         }
         private static void registreerCursus(Cursus cursus){
-            
             alleCursussen.Add(cursus);
-            maxId++;
-        
         }
         public static Cursus ZoekCursusOpId(int id) {
             
@@ -162,7 +158,7 @@ namespace SchoolAdmin
             Console.WriteLine("Aantal studiepunten?");
             byte studiepunten = Convert.ToByte(Console.ReadLine());
 
-            Cursus cursus = new Cursus(titel, studiepunten);
+            new Cursus(titel, studiepunten);
 
         }
     }

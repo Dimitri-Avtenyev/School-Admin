@@ -33,14 +33,13 @@ namespace SchoolAdmin
         private static List<VakInschrijving> alleVakInschrijvingen = new List<VakInschrijving>();
         public static ImmutableList<VakInschrijving> AlleVakInschrijvingen {
             get {
-                return alleVakInschrijvingen.ToImmutableList();
+                return alleVakInschrijvingen.ToImmutableList<VakInschrijving>();
             }
         }
         public VakInschrijving(Student student, Cursus cursus, byte? resultaat) {
             this.cursus =  cursus;
             this.student = student;
             this.Resultaat = resultaat;
-            this.student = student;
             alleVakInschrijvingen.Add(this);
         } 
         public static void VakInschrijvingToevoegen() {

@@ -15,7 +15,7 @@ namespace SchoolAdmin
                         tempAlleAdministratiefPersoneel.Add((AdministratiefPersoneel)persoon);
                     }
                 }
-                return tempAlleAdministratiefPersoneel.ToImmutableList();
+                return tempAlleAdministratiefPersoneel.ToImmutableList<AdministratiefPersoneel>();
             }
         }  
         public AdministratiefPersoneel(string naam, DateTime geboortedatum, Dictionary<string,byte> taken ):base(naam,geboortedatum,taken) {

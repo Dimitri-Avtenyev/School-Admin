@@ -37,14 +37,14 @@ namespace SchoolAdmin
         public Persoon(string naam, DateTime geboortedatum) {
             this.Naam = naam;
             this.geboortedatum = geboortedatum;
-            allePersonen.Add(this);
             this.id = maxId;
-            maxId++;
+            Persoon.maxId++;
+            Persoon.allePersonen.Add(this);
         }
         private static List<Persoon> allePersonen = new List<Persoon>();
         public static ImmutableList<Persoon> AllePersonen {
             get {
-                return allePersonen.ToImmutableList();
+                return allePersonen.ToImmutableList<Persoon>();
             }
         }
         public abstract string GenereerNaamKaartje();

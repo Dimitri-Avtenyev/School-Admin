@@ -15,17 +15,17 @@ namespace SchoolAdmin
                         tempAlleStudenten.Add((Student)persoon);
                     }
                 }
-                return tempAlleStudenten.ToImmutableList();
+                return tempAlleStudenten.ToImmutableList<Student>();
             }
         }
-        private Dictionary<DateTime, string> dossier = new Dictionary<DateTime, string>();
+        private Dictionary<DateTime, string> dossier;
         public ImmutableDictionary<DateTime, string> Dossier {
             get {
-                return dossier.ToImmutableDictionary();
+                return this.dossier.ToImmutableDictionary<DateTime, string>();
             }
         } 
         public Student(string naam, DateTime geboorteDatum):base(naam,geboorteDatum) {
-       
+            this.dossier = new Dictionary<DateTime, string>();
         }
         public ImmutableList<VakInschrijving> VakInschrijvingen {
             get {
@@ -35,7 +35,7 @@ namespace SchoolAdmin
                         tempVakscrijvingen.Add(vakinschrijving);
                     } 
                 }
-                return tempVakscrijvingen.ToImmutableList();
+                return tempVakscrijvingen.ToImmutableList<VakInschrijving>();
             }
         }
         public ImmutableList<Cursus> Cursussen {
@@ -44,7 +44,7 @@ namespace SchoolAdmin
                 foreach(var vak in VakInschrijvingen) {
                     tempCursussen.Add(vak.Cursus);
                 }
-                return tempCursussen.ToImmutableList();
+                return tempCursussen.ToImmutableList<Cursus>();
             }
         }
         public override string GenereerNaamKaartje() {
@@ -61,7 +61,7 @@ namespace SchoolAdmin
         }
         public void RegistreerVakInschrijving(Cursus cursus, byte? cijfer) {
 
-            VakInschrijving nieuwVakInschrijving = new VakInschrijving(this, cursus, cijfer);
+            new VakInschrijving(this, cursus, cijfer);
            
         }
         //older method (H10), before lists/foreach
@@ -166,7 +166,7 @@ namespace SchoolAdmin
             string naam = Console.ReadLine();
             Console.WriteLine("Geboortedatum van de student? (dd/mmmm/yyyy)");
             string geboorteDatum = Console.ReadLine();
-            Student student = new Student(naam, DateTime.Parse(geboorteDatum));
+            new Student(naam, DateTime.Parse(geboorteDatum));
         }
 
 

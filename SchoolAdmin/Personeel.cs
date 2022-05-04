@@ -15,7 +15,7 @@ namespace SchoolAdmin
                             tempAllePersoneel.Add((Personeel)persoon);
                         }
                     }
-                return tempAllePersoneel.ToImmutableList();
+                return tempAllePersoneel.ToImmutableList<Personeel>();
                 
             }
         }
@@ -36,16 +36,21 @@ namespace SchoolAdmin
         public ImmutableDictionary<string, byte> Taken {
             get {
                 Dictionary<string, byte> tempDictionary = new Dictionary<string, byte>();
-                foreach(var record in taken) {
+                foreach(var record in taken) { 
                     if(record.Key is not null) {
                     tempDictionary.Add(record.Key, record.Value);
                     }
                 }
-                    return taken.ToImmutableDictionary();
+                    return taken.ToImmutableDictionary<string, byte>();
             } 
         } 
        public Personeel(string naam, DateTime geboortedatum, Dictionary<string, byte> taken):base(naam, geboortedatum) {
            this.taken = taken;
+            if (!(taken is null)) {
+            foreach(var record in taken) {
+                this.taken.Add(record.Key,record.Value);
+            }
+        }
        }
        public abstract uint BerekenSalaris();
     }

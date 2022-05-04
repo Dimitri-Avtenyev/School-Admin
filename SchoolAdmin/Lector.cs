@@ -16,7 +16,7 @@ namespace SchoolAdmin
                         tempAlleLectoren.Add((Lector)persoon);
                     }
                 }
-                return tempAlleLectoren.ToImmutableList();
+                return tempAlleLectoren.ToImmutableList<Lector>();
             }
         }
         private Dictionary<Cursus, double> cursussen = new Dictionary<Cursus, double>();
