@@ -40,10 +40,15 @@ namespace SchoolAdmin
             if(student is null || cursus is null) {
                 throw new ArgumentException("Inschrijving zonder student || vak kan niet.");
             } 
+            //Student reeds ingeschreven
             foreach(VakInschrijving vak in VakInschrijving.AlleVakInschrijvingen) {
                 if(vak.student.Equals(student)) {
-                    throw new ArgumentException($"Student {vak.Student.Naam} is al ingeschreven voor {vak.Cursus.Titel}");
+                    throw new ArgumentException($"Student {vak.Student.Naam} is al ingeschreven voor {vak.Cursus.Titel}.");
                 }
+            }
+            //Max 20 studenten per cursus
+            if(cursus.Studenten.Count == 20) {
+                throw new CapaciteitOverschredenException($"Maximum aantal studenten voor {cursus.Titel} is al bereikt, inschrijving niet meer mogelijk.");
             }
             this.cursus =  cursus;
             this.student = student;
@@ -61,7 +66,6 @@ namespace SchoolAdmin
             }
             int studentKeuze = Convert.ToInt32(Console.ReadLine());
             //Test ArgumentException H16 
-            //---*
             if(studentKeuze == 0) {
                 try {
                     new VakInschrijving(null, null, null);
@@ -70,7 +74,12 @@ namespace SchoolAdmin
                 }
                 return;
             }
-            //---*
+            //Test CapaciteitOverschrevenException -> opvulling cursus 20 inschrijvingen
+            Cursus testCursus = new Cursus("TestCursus", 6);
+            for(byte i = 0; i<20; i++) {
+                Student testStudent = new Student("TestStudent", new DateTime(1990,1,1));
+                new VakInschrijving(testStudent, testCursus, null);
+            }
             Student student = Student.AlleStudenten[studentKeuze-1]; //userInput keuze 1 => index = 0
             student.ToString();
             Console.WriteLine("Welke cursus?");
@@ -79,7 +88,12 @@ namespace SchoolAdmin
                 Console.WriteLine($"{i+1}. {Cursus.AlleCursussen[i].Titel}");
             }
             int cursusKeuze = Convert.ToInt32(Console.ReadLine());
-            Cursus cursus = Cursus.AlleCursussen[cursusKeuze-1];//userInput keuze 1 => index = 0
+            Cursus cursus = null;
+            try {
+                cursus = Cursus.AlleCursussen[cursusKeuze-1];//userInput keuze 1 => index = 0
+            } catch(CapaciteitOverschredenException e) {
+                Console.WriteLine(e.Message);
+            }
             Console.WriteLine("Wil je een resultaat toekennen?");
             string resultaatKeuze = Console.ReadLine();
             switch(resultaatKeuze.ToLower()) {
