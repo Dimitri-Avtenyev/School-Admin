@@ -78,7 +78,7 @@ namespace SchoolAdmin
         }
         public static void ToonInschrijvingsGegevens() {
 
-            foreach(var inschrijving in AlleVakInschrijvingen) {
+            foreach(var inschrijving in VakInschrijving.AlleVakInschrijvingen) {
                 Console.WriteLine($"{inschrijving.Student}\nIngeschreven voor {inschrijving.Cursus.Titel}");
             }
         }

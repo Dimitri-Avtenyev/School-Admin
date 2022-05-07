@@ -20,6 +20,7 @@ namespace SchoolAdmin
                 Console.WriteLine("8. Cursus toevoegen");
                 Console.WriteLine("9. VakInschrijving toevoegen");
                 Console.WriteLine("10. Inschrijvingsgegevens tonen\n");
+                Console.Write(">");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
                     default: 

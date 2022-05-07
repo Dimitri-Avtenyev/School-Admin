@@ -124,6 +124,12 @@ namespace SchoolAdmin
             Cursus webontwikkeling = new Cursus("Webontwikkeling");
             Cursus databanken = new Cursus("Databanken");
             Cursus theForce = new Cursus("The Force");
+                try {
+                Cursus testDuplicateException = new Cursus("Programmeren");
+            } catch(DuplicateDataException e) {
+                Console.WriteLine($"Duplicaat: {e}");
+            }
+            
             student1.RegistreerVakInschrijving(programmeren, 17);
             
             //Test met dossier
@@ -150,10 +156,10 @@ namespace SchoolAdmin
             student2.ToonOverzicht();
 
             //Test Vakinschrijvingen
-            foreach(var vak in student1.VakInschrijvingen) {
-                Console.WriteLine($"print van vakinschrijvingen {student1.Naam}");
-                Console.WriteLine(vak.Cursus.Titel);
-            }
+            // foreach(var vak in student1.VakInschrijvingen) {
+            //     Console.WriteLine($"print van vakinschrijvingen {student1.Naam}");
+            //     Console.WriteLine(vak.Cursus.Titel);
+            // }
             
         }
         public static void DemonstreerStudentUitTekstFormaat() {

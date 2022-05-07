@@ -44,7 +44,6 @@ namespace SchoolAdmin
                 return tempStudenten.ToImmutableList<Student>();
             }
         }
-        // VakInschrijving(Student student, Cursus cursus, byte? resultaat)
         public ImmutableList<VakInschrijving> VakInschrijvingen {
             get {
                 List<VakInschrijving> tempVakinschrijvingen = new List<VakInschrijving>();
@@ -57,11 +56,16 @@ namespace SchoolAdmin
             }
         }
         public Cursus(string titel, byte studiepunten) {
+            foreach(Cursus cursus in Cursus.AlleCursussen) {
+                if(cursus.Titel == titel) {
+                    throw new DuplicateDataException("Nieuwe cursus heeft dezelfde naam als een bestaande cursus.", this, cursus);
+                }
+            }
             this.Titel = titel;
             this.Studiepunten = studiepunten;
+            this.id = Cursus.maxId;
             Cursus.maxId++;
             registreerCursus(this);
-            this.id = Cursus.maxId;
         }
         public Cursus(string titel):this(titel, 3) {
 
@@ -157,8 +161,13 @@ namespace SchoolAdmin
             string titel = Console.ReadLine();
             Console.WriteLine("Aantal studiepunten?");
             byte studiepunten = Convert.ToByte(Console.ReadLine());
-
-            new Cursus(titel, studiepunten);
+            try {
+                new Cursus(titel, studiepunten);
+            } catch(DuplicateDataException e) {
+                Cursus temp = (Cursus)e.Waarde2;
+                Console.WriteLine($"{e.Message} -> ID bestaande cursus: {temp.Id}");
+            }
+           
 
         }
     }
