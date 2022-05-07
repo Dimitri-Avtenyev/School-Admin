@@ -37,6 +37,14 @@ namespace SchoolAdmin
             }
         }
         public VakInschrijving(Student student, Cursus cursus, byte? resultaat) {
+            if(student is null || cursus is null) {
+                throw new ArgumentException("Inschrijving zonder student || vak kan niet.");
+            } 
+            foreach(VakInschrijving vak in VakInschrijving.AlleVakInschrijvingen) {
+                if(vak.student.Equals(student)) {
+                    throw new ArgumentException($"Student {vak.Student.Naam} is al ingeschreven voor {vak.Cursus.Titel}");
+                }
+            }
             this.cursus =  cursus;
             this.student = student;
             this.Resultaat = resultaat;
@@ -47,11 +55,22 @@ namespace SchoolAdmin
             Console.WriteLine("Welke student?");
             int counter = 1;
             foreach(var studentItem in Student.AlleStudenten) {
-                Console.WriteLine(counter);
+                Console.WriteLine($"{counter}.");
                 Console.WriteLine(studentItem);
                 counter++;
             }
             int studentKeuze = Convert.ToInt32(Console.ReadLine());
+            //Test ArgumentException H16 
+            //---*
+            if(studentKeuze == 0) {
+                try {
+                    new VakInschrijving(null, null, null);
+                } catch(ArgumentException e) {
+                    Console.WriteLine($"{e.Message}");
+                }
+                return;
+            }
+            //---*
             Student student = Student.AlleStudenten[studentKeuze-1]; //userInput keuze 1 => index = 0
             student.ToString();
             Console.WriteLine("Welke cursus?");
@@ -69,10 +88,18 @@ namespace SchoolAdmin
                 case("ja"):
                     Console.WriteLine("Wat is het resultaat?");
                     byte resultaat = Convert.ToByte(Console.ReadLine());
-                    VakInschrijving vakInschrijving = new VakInschrijving(student, cursus, resultaat);
+                    try {
+                        VakInschrijving vakInschrijving = new VakInschrijving(student, cursus, resultaat);
+                    } catch(ArgumentException e) {
+                        Console.WriteLine($"{e.Message}");
+                    }
                     break;
                 case("nee"):
-                    vakInschrijving = new VakInschrijving(student, cursus, null);
+                       try {
+                        VakInschrijving vakInschrijving = new VakInschrijving(student, cursus, null);
+                    } catch(ArgumentException e) {
+                        Console.WriteLine($"{e.Message}");
+                    }
                     break;
             }
         }
