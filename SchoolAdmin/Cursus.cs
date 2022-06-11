@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace SchoolAdmin
 {
-    class Cursus
+    class Cursus : ICSVSerializable
     {
         public string Titel;
         private static int maxId = 1;
@@ -94,6 +94,9 @@ namespace SchoolAdmin
         public override string ToString() {
             return $"Cursus {this.Titel} heeft {this. Studiepunten} studiepunten";
         } 
+        public string ToCSV() {
+            return $"{this.GetType().Name};{this.Id};\"{this.Titel}\";{this.studiepunten}";
+        }
         public void ToonOverzicht() {
 
             Console.WriteLine($"--- ({this.Id}): {this.Studiepunten}stp {this.Titel} ---");

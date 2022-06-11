@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 
 namespace SchoolAdmin
 {
-    abstract class Persoon
+    abstract class Persoon : ICSVSerializable
     {
         private string naam;
         public string Naam {
@@ -82,6 +83,8 @@ namespace SchoolAdmin
             string naamKaartje = $"Persoon\n-------\nNaam: {this.Naam}\nLeeftijd: {this.Leeftijd}\nMeerbepaald, {persoonFunctie}";
             return naamKaartje.ToString();
         }
+        public virtual string ToCSV() {
+            return $"{this.GetType().Name};{this.Id};\"{this.Naam}\";{this.Geboortedatum.ToString(new CultureInfo("nl-BE"))}";
+        }
     }
-
 }

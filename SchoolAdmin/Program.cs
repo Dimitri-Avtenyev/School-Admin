@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SchoolAdmin 
 {
@@ -22,6 +23,7 @@ namespace SchoolAdmin
                 Console.WriteLine("10. Inschrijvingsgegevens tonen\n");
                 Console.WriteLine("11. Toon studenten");
                 Console.WriteLine("12. Toon Cursussen");
+                Console.WriteLine("13. Data wegschrijven naar CSV-file");
                 Console.Write(">");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
@@ -66,6 +68,14 @@ namespace SchoolAdmin
                         break;
                     case("12"):
                         Cursus.ToonCursussen();
+                        break;
+                    case("13"):
+                        var csvSerializables = new List<ICSVSerializable>();
+                        csvSerializables.AddRange(Persoon.AllePersonen);
+                        csvSerializables.AddRange(Cursus.AlleCursussen);
+                        foreach(var serializable in csvSerializables) {
+                            Console.WriteLine(serializable.ToCSV());
+                        }
                         break;
                 }
             } while(!stop);

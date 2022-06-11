@@ -44,7 +44,7 @@ namespace SchoolAdmin
                     return taken.ToImmutableDictionary<string, byte>();
             } 
         } 
-       public Personeel(string naam, DateTime geboortedatum, Dictionary<string, byte> taken):base(naam, geboortedatum) {
+        public Personeel(string naam, DateTime geboortedatum, Dictionary<string, byte> taken):base(naam, geboortedatum) {
            this.taken = taken;
             if (!(taken is null)) {
             foreach(var record in taken) {
@@ -52,7 +52,11 @@ namespace SchoolAdmin
             }
         }
        }
-       public abstract uint BerekenSalaris();
+        public abstract uint BerekenSalaris();
+        public override string ToCSV() {
+            
+            return $"{base.ToCSV()}";
+        }
     }
  
 }

@@ -47,6 +47,10 @@ namespace SchoolAdmin
                 return tempCursussen.ToImmutableList<Cursus>();
             }
         }
+        public override string ToCSV() {
+
+            return $"{base.ToCSV()};{this.Leeftijd}";
+        }
         public override string GenereerNaamKaartje() {
             return $"{this.Naam} (STUDENT)";
         }
@@ -153,11 +157,11 @@ namespace SchoolAdmin
             Cursus webontwikkeling = new Cursus("Webontwikkeling");
             Cursus databanken = new Cursus("Databanken");
             Cursus theForce = new Cursus("The Force");
-                try {
-                Cursus testDuplicateException = new Cursus("Programmeren");
-            } catch(DuplicateDataException e) {
-                Console.WriteLine($"Duplicaat: {e}");
-            }
+            // try {
+            //     Cursus testDuplicateException = new Cursus("Programmeren");
+            // } catch(DuplicateDataException e) {
+            //     Console.WriteLine($"Duplicaat: {e}");
+            // }
             
             student1.RegistreerVakInschrijving(programmeren, 17);
             
@@ -183,7 +187,6 @@ namespace SchoolAdmin
             student2.RegistreerVakInschrijving(databanken, 9);
             //student2.Kwoteer(2, 9);
             student2.ToonOverzicht();
-
             //Test Vakinschrijvingen
             // foreach(var vak in student1.VakInschrijvingen) {
             //     Console.WriteLine($"print van vakinschrijvingen {student1.Naam}");
