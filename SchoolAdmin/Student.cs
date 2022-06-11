@@ -97,6 +97,35 @@ namespace SchoolAdmin
             }
             Console.WriteLine($"Gemiddelde:".PadRight(20)+$"{this.Gemiddelde():F1}\n");
         }
+        public static void ToonStudenten() {
+            Console.WriteLine("Toon studenten in:");
+            Console.WriteLine("1. Stijgende alfabetische volgorde");
+            Console.WriteLine("2. Dalende alfabetische volgorde");
+            int keuze = 0;
+            try {
+                keuze = Convert.ToInt32(Console.ReadLine());
+            } catch(ArgumentException) {
+                Console.WriteLine("Keuze moet een getal zijn");
+            }
+            
+            IComparer<Student> comparer = null;
+            switch(keuze) {
+                case(1):
+                comparer = new StudentenVolgensNaamComparerOplopend();
+                    break;
+                case(2):
+                comparer = new StudentenVolgensNaamComparerAflopend();
+                    break;
+                default: Console.WriteLine("Ongeldige keuze!");
+                    break;
+            }
+
+            ImmutableList<Student> alleStudentenGesorteerd = AlleStudenten.Sort(comparer);
+            foreach (Student student in alleStudentenGesorteerd) {
+                Console.WriteLine(student.ToString());
+            }
+
+        }
         public static Student StudentUitTekstFormaat(string cvsWaarde) {
             //input vb: Naam;dd;mm;yyy;cursus;cijfer; ...cursus;cijfer
             string[] cvsWaardes = cvsWaarde.Split(";");
@@ -170,7 +199,7 @@ namespace SchoolAdmin
         public static void StudentToevoegen() {
             Console.WriteLine("Naam van de student?");
             string naam = Console.ReadLine();
-            Console.WriteLine("Geboortedatum van de student? (dd/mmmm/yyyy)");
+            Console.WriteLine("Geboortedatum van de student? (dd/MM/yyyy)");
             string geboorteDatum = Console.ReadLine();
             new Student(naam, DateTime.Parse(geboorteDatum));
         }

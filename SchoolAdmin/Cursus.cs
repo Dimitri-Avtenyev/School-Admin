@@ -91,7 +91,9 @@ namespace SchoolAdmin
         public override int GetHashCode() {
             return this.Id.GetHashCode();
         }
-
+        public override string ToString() {
+            return $"Cursus {this.Titel} heeft {this. Studiepunten} studiepunten";
+        } 
         public void ToonOverzicht() {
 
             Console.WriteLine($"--- ({this.Id}): {this.Studiepunten}stp {this.Titel} ---");
@@ -102,6 +104,34 @@ namespace SchoolAdmin
                 }
             }
             Console.WriteLine("\n");
+        }
+        public static void ToonCursussen() {
+            Console.WriteLine("Toon cursussen in:");
+            Console.WriteLine("1. Stijgende alfabetische volgorde");
+            Console.WriteLine("2. Stijgende volgorde van studiepunten");
+
+            int keuze = 0;
+            try {
+                keuze = Convert.ToInt32(Console.ReadLine());
+            } catch(ArgumentException) {
+                Console.WriteLine("Keuze moet een getal zijn");
+            }
+            
+            IComparer<Cursus> comparer = null;
+            switch(keuze) {
+                case(1):
+                comparer = new CursusVolgensTitelOplopendComparer();
+                    break;
+                case(2):
+                comparer = new CursusVolgensStudiepuntenOplopendComparer();
+                    break;
+                default: Console.WriteLine("Ongeldige keuze!");
+                    break;
+            }
+            ImmutableList<Cursus> alleCursussenGesorteerd = AlleCursussen.Sort(comparer);
+            foreach (Cursus cursus in alleCursussenGesorteerd) {
+                Console.WriteLine(cursus.ToString());
+            }
         }
         private static void registreerCursus(Cursus cursus){
             alleCursussen.Add(cursus);

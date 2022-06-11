@@ -20,6 +20,8 @@ namespace SchoolAdmin
                 Console.WriteLine("8. Cursus toevoegen");
                 Console.WriteLine("9. VakInschrijving toevoegen");
                 Console.WriteLine("10. Inschrijvingsgegevens tonen\n");
+                Console.WriteLine("11. Toon studenten");
+                Console.WriteLine("12. Toon Cursussen");
                 Console.Write(">");
                 string userInput = Console.ReadLine();
                 switch(userInput.ToLower()){
@@ -59,6 +61,12 @@ namespace SchoolAdmin
                     case("10"):
                        VakInschrijving.ToonInschrijvingsGegevens();
                     break;
+                    case("11"):
+                        Student.ToonStudenten();
+                        break;
+                    case("12"):
+                        Cursus.ToonCursussen();
+                        break;
                 }
             } while(!stop);
         }

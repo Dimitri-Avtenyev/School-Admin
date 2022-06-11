@@ -42,7 +42,7 @@ namespace SchoolAdmin
             } 
             //Student reeds ingeschreven
             foreach(VakInschrijving vak in VakInschrijving.AlleVakInschrijvingen) {
-                if(vak.student.Equals(student)) {
+                if(vak.student.Equals(this.student)) {
                     throw new ArgumentException($"Student {vak.Student.Naam} is al ingeschreven voor {vak.Cursus.Titel}.");
                 }
             }
