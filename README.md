@@ -35,6 +35,6 @@ The project incorporates concepts and exercises from various chapters of the cur
 To run SchoolAdmin, ensure you have the .NET SDK installed on your machine. Clone the repository and navigate to the project directory in your terminal.
 
 ```bash
-git clone https://github.com/your-username/schooladmin.git
+git clone 
 cd schooladmin
 dotnet run
